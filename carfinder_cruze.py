@@ -8,7 +8,7 @@ from dataclasses import dataclass
 config = yaml.safe_load(open("./config.yaml"))
 
 urls = {
-    "https://vehiculos.mercadolibre.com.ar/1951-1984/vw-escarabajo#applied_filter_id%3DVEHICLE_YEAR%26applied_filter_name%3DAño%26applied_filter_order%3D7%26applied_value_id%3D1951-1984%26applied_value_name%3D1951-1984%26applied_value_order%3D33%26applied_value_results%3DUNKNOWN_RESULTS%26is_custom%3Dtrue"
+    "https://autos.mercadolibre.com.ar/chevrolet/automatica/hasta-35000-km/capital-federal/cruze_ITEM*CONDITION_2230581_NoIndex_True_VEHICLE*BODY*TYPE_452758#applied_filter_id%3DTRANSMISSION%26applied_filter_name%3DTransmisi%C3%B3n%26applied_filter_order%3D8%26applied_value_id%3D370876%26applied_value_name%3DAutom%C3%A1tica%26applied_value_order%3D1%26applied_value_results%3D8%26is_custom%3Dfalse"
 }
 
 TELEGRAM_TOKEN = config['telegram']['token']
@@ -33,7 +33,7 @@ class Parser:
 
 
 parsers = [
-    Parser(website="https://vehiculos.mercadolibre.com.ar", link_regex="section.ui-search-results ol.ui-search-layout--grid li.ui-search-layout__item div.ui-search-result__wrapper a.ui-search-result__content"),
+    Parser(website="https://autos.mercadolibre.com.ar", link_regex="section.ui-search-results ol.ui-search-layout--grid li.ui-search-layout__item div.ui-search-result__wrapper a.ui-search-result__content"),
 ]
 
 def extract_ads(url, text):
@@ -65,7 +65,7 @@ def split_seen_and_unseen(ads):
 
 def get_history():
     try:
-        with open("seen.txt", "r") as f:
+        with open("seen_cruze.txt", "r") as f:
             return {l.rstrip() for l in f.readlines()}
     except:
         return set()
@@ -79,7 +79,7 @@ def notify(ad):
 
 
 def mark_as_seen(unseen):
-    with open("seen.txt", "a+") as f:
+    with open("seen_cruze.txt", "a+") as f:
         ids = ["{}\n".format(u["id"]) for u in unseen]
         f.writelines(ids)
 
